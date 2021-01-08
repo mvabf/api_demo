@@ -27,7 +27,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -38,7 +38,12 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = new Product();
+
+        $product->fill($request->all());
+        $product->save();
+
+        return response()->json($product, 201);
     }
 
     /**
@@ -49,7 +54,15 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $products = new Product();
+
+        $products = Product::find($id);
+
+        if (!isset($products)) {
+            return response()->json(['message'=>'Record not found!'], 404);
+        }
+
+        return response()->json($products);
     }
 
     /**
