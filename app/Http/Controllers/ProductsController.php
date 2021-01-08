@@ -85,7 +85,16 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        if (!isset($product)) {
+            return response()->json(['message'=>'Record not found!'], 404);
+        }
+
+        $product->fill($request->all());
+        $product->save();
+
+        return response()->json($product);
     }
 
     /**
